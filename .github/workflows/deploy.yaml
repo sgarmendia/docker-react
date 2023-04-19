@@ -19,6 +19,8 @@ jobs:
  
       - run: docker build -t sgarmendia/docker-react .
  
+      - run: docker push sgarmendia/docker-react
+ 
       - name: Generate deployment package
         run: zip -r deploy.zip . -x '*.git*'
  
