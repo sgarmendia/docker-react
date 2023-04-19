@@ -20,10 +20,12 @@ jobs:
       - run: docker build -t sgarmendia/docker-react .
  
       - run: docker push sgarmendia/docker-react
- 
+
       - name: Generate deployment package
-        run: zip -r deploy.zip . -x '*.git*'
- 
+        run: |
+          echo '{"AWSEBDockerrunVersion": "1", "Image": {"Name": "sgarmendia/docker-react", "Update": "true"}, "Ports": [{"ContainerPort": "80"}]}' > Dockerrun.aws.json
+          zip -r deploy.zip Dockerrun.aws.json
+          
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v21
         with:
